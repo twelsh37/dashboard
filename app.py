@@ -66,32 +66,31 @@ app.layout = dbc.Container(html.Div([
             [
                 # Bar Chart 1
                 dbc.Col(
-                    dcc.Graph(id='bar_chart1', figure={} ,style={'height': '45vh'}),
+                    [dcc.Markdown('#### Risks By Business Unit ####'),
+                    dcc.Graph(id='bar_chart1', figure={} ,style={'height': '40vh'})],
                         width=4, lg={'size': 4,  "offset": 0, 'order': 'first'},
                         ),
                 # Bar Chart 2
-                dbc.Col(dcc.Graph(id='bar_chart2', figure={}, style={'height': '45vh'}),
+                dbc.Col(
+                    [dcc.Markdown('#### Action Items by Business Unit and Year ####'),
+                    dcc.Graph(id='bar_chart2', figure={}, style={'height': '40vh'})],
                         width=4, lg={'size': 4,  "offset": 0, 'order': 'second'}
                         ),
                 # Pie chart Sub Plot
-                dbc.Col(dcc.Graph(id='sub_plot1', figure={}, style={'height': '45vh'}),
+                dbc.Col(
+                    [dcc.Markdown('#### Number of Action Items by Business Unit ####'),
+                    dcc.Graph(id='sub_plot1', figure={}, style={'height': '40vh'})],
                         width=4, lg={'size': 4,  "offset": 0, 'order': 'last'}
                         ),
             # Sets Margin
             ],className='p-3'
         ),
-        # Third Row Spacer row
-    #html.Br(),
-        # dbc.Row(dbc.Col(html.H1(""),
-        #                 width={'size': 12, 'padding': 10},
-        #                 ),
-        #         ),
 
        # Third Row
         dbc.Row(
             # Dash Data Table
             [dbc.Col(
-                [dcc.Markdown('### Top Risks ###'),
+                [dcc.Markdown('#### Top Risks ####'),
                 dash_table.DataTable(
                     id='table1',
                     columns=[
@@ -111,7 +110,7 @@ app.layout = dbc.Container(html.Div([
                     filter_action="native",     # allow filtering of data by user ('native') or not ('none')
                     sort_action="native",       # enables data to be sorted per-column by user or not ('none')
                     page_current=0,             # page number that user is on
-                    page_size=14,               # number of rows visible per page
+                    page_size=10,               # number of rows visible per page
                     style_cell={
                         'overflow': 'hidden',
                         'textOverflow': 'ellipsis',
@@ -332,10 +331,10 @@ app.layout = dbc.Container(html.Div([
             ]),
                 # Sunburst chart
                 dbc.Col(
-                    dcc.Graph(id='sun_burst1', figure={}, style={'height': '45vh'}),
+                    [dcc.Markdown('#### Breakdown of Risk by Risk Type - 2021 ####'),
+                    dcc.Graph(id='sun_burst1', figure={}, style={'height': '40vh'})],
                     width=4, lg={'size': 5, "offset": 0, 'order': 'second'}
-                       ),
-
+                        ),
             # Sets Margin
             ],className='p-3'
         ),
@@ -410,7 +409,7 @@ def update_graph():
                           name="2021")
                    )
 
-    fig1.layout = ({"title": "<b>Risks by Business Unit<b>",
+    fig1.layout = ({#"title": "<b>Risks by Business Unit<b>",
                     "xaxis": {"title": "Business Unit"},
                     "xaxis": {"linecolor": "Black"},
                     "xaxis_categoryorder": "category ascending",
@@ -434,7 +433,7 @@ def update_graph():
                           name="2021")
                    )
 
-    fig2.layout = ({"title": "<b>Number of Action Items by Business Unit by Year<b>",
+    fig2.layout = ({#"title": "<b>Number of Action Items by Business Unit by Year<b>",
                     "xaxis": {"title": "Business Unit"},
                     "xaxis": {"linecolor": "Black"},
                     "xaxis_categoryorder": "category ascending",
@@ -460,7 +459,7 @@ def update_graph():
                           ),
                    row=1, col=2)
 
-    fig3.update_layout(title_text="<b>Number of Action Items by Business Unit<b>",
+    fig3.update_layout(#title_text="<b>Number of Action Items by Business Unit<b>",
                        height=600,
                        showlegend=True,
                        # Litle hack here to hide items that have zero value
@@ -487,7 +486,7 @@ def update_graph():
         maxdepth=3,
         branchvalues='total',  # other option is 'remainder'
         hover_name='risk_types',
-        title='Breakdown of Risk by Risk Type - 2021',
+        #title='Breakdown of Risk by Risk Type - 2021',
         template='presentation'
     )
 
@@ -497,4 +496,4 @@ def update_graph():
     return fig1, fig2, fig3, fig4
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
